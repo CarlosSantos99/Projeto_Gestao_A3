@@ -19,14 +19,11 @@ public class Projeto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    
+
     private String nome;
     private String descricao;
     private LocalDate dataInicio;
     private LocalDate dataFimPrevista;
-
-    //@Enumerated(EnumType.STRING)
-    //private StatusProjeto status;
 
     @ManyToOne
     @JoinColumn(name = "gerente_id")
@@ -34,8 +31,8 @@ public class Projeto {
     private Usuario gerente;
 
     @ManyToMany(mappedBy = "projetos")
+    @JsonBackReference("projeto-equipe")
     private List<Equipe> equipes;
-
 
     public Projeto(Integer id, String nome, String descricao, LocalDate dataInicio, LocalDate dataFimPrevista) {
         this.id = id;

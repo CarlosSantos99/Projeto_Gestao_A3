@@ -1,6 +1,7 @@
 package com.cels.Gestao.entities;
 
 import com.cels.Gestao.enums.Perfil;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,10 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
+
+    @ManyToMany(mappedBy = "membros")
+    @JsonBackReference("usuario-equipe")
+    private List<Equipe> equipes;
 
     @OneToMany(mappedBy = "gerente")
     @JsonManagedReference

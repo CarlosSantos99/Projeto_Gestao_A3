@@ -50,6 +50,8 @@ public class GestaoApplication implements CommandLineRunner {
 
 		user1.getProjetosGerenciados().add(proj1);
 		proj1.setGerente(user1);
+		equipe1.getMembros().add(user1);
+		equipe1.getProjetos().add(proj1);
 		usuarioRepository.save(user1);
 		projetoRepository.save(proj1);
 		equipeRepository.save(equipe1);

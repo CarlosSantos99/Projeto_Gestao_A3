@@ -1,11 +1,13 @@
 package com.cels.Gestao.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,14 +27,16 @@ public class Equipe {
             name = "equipe_membros",
             joinColumns = @JoinColumn(name = "equipe_id"),
             inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Usuario> membros;
+    @JsonManagedReference("usuario-equipe")
+    private List<Usuario> membros = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
             name = "equipe_projetos",
             joinColumns = @JoinColumn(name = "equipe_id"),
             inverseJoinColumns = @JoinColumn(name = "projeto_id"))
-    private List<Projeto> projetos;
+    @JsonManagedReference("projeto-equipe")
+    private List<Projeto> projetos = new ArrayList<>();
 
 
     public Equipe(Integer id, String nome, String descricao) {
