@@ -1,7 +1,9 @@
 package com.cels.Gestao.services;
 
 import com.cels.Gestao.entities.Projeto;
+import com.cels.Gestao.entities.Usuario;
 import com.cels.Gestao.repositories.ProjetoRepository;
+import com.cels.Gestao.repositories.UsuarioRepository;
 import com.cels.Gestao.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,28 @@ import java.util.Optional;
 public class ProjetoService {
     @Autowired
     private ProjetoRepository repo;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository; // precisa injetar também
+
+    public Projeto salvar(Projeto projeto, Integer usuarioId) {
+        // Buscar usuário
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        // Associar o projeto ao gerente
+        projeto.setGerente(usuario);
+
+        // Adicionar o projeto à lista de projetos do usuário (bidirecional)
+        if (usuario.getProjetosGerenciados() != null) {
+            usuario.getProjetosGerenciados().add(projeto);
+        }
+
+        // Salvar projeto
+        return repo.save(projeto);
+    }
+
+
 
     public Projeto salvar(Projeto projeto) {
         return repo.save(projeto);

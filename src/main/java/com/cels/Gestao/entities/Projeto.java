@@ -1,5 +1,6 @@
 package com.cels.Gestao.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +27,9 @@ public class Projeto {
     //@Enumerated(EnumType.STRING)
     //private StatusProjeto status;
 
-   @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "gerente_id")
+    @JsonBackReference
     private Usuario gerente;
 
     @ManyToMany(mappedBy = "projetos")
@@ -83,6 +85,12 @@ public class Projeto {
         this.dataFimPrevista = dataFimPrevista;
     }
 
+    public Usuario getGerente() {
+        return gerente;
+    }
 
+    public void setGerente(Usuario gerente) {
+        this.gerente = gerente;
+    }
 }
 

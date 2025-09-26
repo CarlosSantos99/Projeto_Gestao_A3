@@ -45,11 +45,16 @@ public class GestaoApplication implements CommandLineRunner {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		Projeto proj1 =  new Projeto(null, "projeto teste","teste de projeto",LocalDate.parse("10/10/2010", formatter), LocalDate.parse("11/10/2010", formatter) );
-		projetoRepository.save(proj1);
-
 
 		Equipe equipe1 = new Equipe(null,"equipe dev", "equipe dos desenvolvedores");
+
+		user1.getProjetosGerenciados().add(proj1);
+		proj1.setGerente(user1);
+		usuarioRepository.save(user1);
+		projetoRepository.save(proj1);
 		equipeRepository.save(equipe1);
+
+
 	}
 
 

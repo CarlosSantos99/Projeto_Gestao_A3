@@ -1,11 +1,13 @@
 package com.cels.Gestao.entities;
 
 import com.cels.Gestao.enums.Perfil;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,8 +30,9 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
-  @OneToMany(mappedBy = "gerente")
-    private List<Projeto> projetosGerenciados;
+    @OneToMany(mappedBy = "gerente")
+    @JsonManagedReference
+    private List<Projeto> projetosGerenciados = new ArrayList<>();
 
     public Usuario(Integer id, String nomeCompleto, String cpf, String email, String cargo, String login, String senha, Perfil perfil) {
         this.id = id;
@@ -40,6 +43,7 @@ public class Usuario {
         this.login = login;
         this.senha = senha;
         this.perfil = perfil;
+
     }
 
     public Integer getId() {
@@ -106,5 +110,11 @@ public class Usuario {
         this.perfil = perfil;
     }
 
+    public List<Projeto> getProjetosGerenciados() {
+        return projetosGerenciados;
+    }
 
+    public void setProjetosGerenciados(List<Projeto> projetosGerenciados) {
+        this.projetosGerenciados = projetosGerenciados;
+    }
 }
